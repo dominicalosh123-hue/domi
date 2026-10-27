@@ -158,8 +158,12 @@ app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname + '/dist/Frontend/index.html'));
 });
 
-// Run server at port 3000
+// Run server at port 3000 (when running locally)
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running at port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`Server is running at port ${PORT}`);
+    });
+}
+
+module.exports = app;
